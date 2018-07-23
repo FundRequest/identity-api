@@ -1,6 +1,8 @@
 package io.fundrequest.identityapi.infrastructure;
 
+import java.util.Optional;
+
 public interface KeycloakDBRepository {
 
-    String findUserIdByIdentityProviderAndFederatedUsername(String identityProvider, String username);
+    Optional<String> findUserIdByIdentityProviderAndFederatedUsername(String identityProvider, String username);
 }

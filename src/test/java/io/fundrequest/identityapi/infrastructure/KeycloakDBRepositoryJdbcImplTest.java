@@ -43,7 +43,19 @@ public class KeycloakDBRepositoryJdbcImplTest {
         insertFederatedIdentity(identityProvider, federatedUsername, federatedUserId);
         insertFederatedIdentity(identityProvider, "afsdsv", "safdadfS");
 
-        assertThat(keycloakDBRepositoryImpl.findUserIdByIdentityProviderAndFederatedUsername(identityProvider, federatedUsername)).isEqualTo(federatedUserId);
+        assertThat(keycloakDBRepositoryImpl.findUserIdByIdentityProviderAndFederatedUsername(identityProvider, federatedUsername)).contains(federatedUserId);
+    }
+
+    @Test
+    public void findUserIdByRealmAndIdentityProviderAndFederatedUsername_notFound() throws DataAccessException {
+        final String identityProvider = "ljhk";
+        final String federatedUsername = "dfszbgs";
+        final String federatedUserId = "462f2db6-cfd2-47d8-a4de-g345aef3fd5";
+
+        insertFederatedIdentity("afdfsa", federatedUsername, "dafdszd");
+        insertFederatedIdentity(identityProvider, "afsdsv", "safdadfS");
+
+        assertThat(keycloakDBRepositoryImpl.findUserIdByIdentityProviderAndFederatedUsername(identityProvider, federatedUsername)).isEmpty();
     }
 
     private void insertFederatedIdentity(final String identityProvider, final String federatedUsername, final String federatedUserId) {
