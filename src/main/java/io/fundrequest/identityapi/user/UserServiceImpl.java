@@ -4,6 +4,7 @@ import io.fundrequest.identityapi.infrastructure.KeycloakDBRepository;
 import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class UserServiceImpl implements UserService {
@@ -17,6 +18,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserRepresentation findByFederatedUsername(final String identityProvider, final String federatedUsername) {
         final String userid = dbRepository.findUserIdByIdentityProviderAndFederatedUsername(identityProvider, federatedUsername);
         return realmResource.users().get(userid).toRepresentation();

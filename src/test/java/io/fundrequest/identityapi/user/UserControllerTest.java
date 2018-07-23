@@ -32,7 +32,7 @@ class UserControllerTest extends AbstractControllerTest<UserController> {
         when(userService.findByFederatedUsername(identityProvider, userName)).thenReturn(userRepresentation);
 
         final String jsonContent = new ObjectMapper().writeValueAsString(userRepresentation);
-        mockMvc.perform(MockMvcRequestBuilders.get("/user")
+        mockMvc.perform(MockMvcRequestBuilders.get("/users")
                                               .param("identityProvider", identityProvider)
                                               .param("federatedUsername", userName))
                .andExpect(MockMvcResultMatchers.status().isOk())

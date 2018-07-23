@@ -18,6 +18,7 @@
         <junit-platform.version>1.0.0</junit-platform.version>
         <junit-vintage-engine.version>4.12.0</junit-vintage-engine.version>
         <javax.ws.rs-api.version>2.1</javax.ws.rs-api.version>
+        <jaxws.version>2.3.0</jaxws.version>
     </properties>
 
     <description>FundRequest Identity API</description>
@@ -57,6 +58,10 @@
             <version>${fundrequest.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-admin-client</artifactId>
             <version>${keycloak.version}</version>
@@ -75,6 +80,19 @@
             <groupId>javax.ws.rs</groupId>
             <artifactId>javax.ws.rs-api</artifactId>
             <version>${javax.ws.rs-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.ws</groupId>
+            <artifactId>jaxws-api</artifactId>
+            <version>${jaxws.version}</version>
         </dependency>
         <dependency>
             <groupId>io.fundrequest</groupId>

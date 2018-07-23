@@ -16,7 +16,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/user", params = {"identityProvider", "federatedUsername"})
+    @GetMapping(value = "/users", params = {"identityProvider", "federatedUsername"})
     public UserRepresentation findUser(@RequestParam String identityProvider, @RequestParam String federatedUsername) {
         return userService.findByFederatedUsername(identityProvider, federatedUsername);
     }
