@@ -8,9 +8,13 @@ pipeline {
         disableConcurrentBuilds()
         timeout(time: 15, unit: 'MINUTES')
     }
+    tools {
+        jdk 'JDK 10'
+    }
     stages {
         stage('Build') {
             steps {
+                sh echo $JAVA_HOME
                 sh 'mvn -B clean install'
             }
             post {
