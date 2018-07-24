@@ -1,6 +1,7 @@
 package io.fundrequest.identityapi.infrastructure;
 
 import io.fundrequest.identityapi.WebApplication;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,6 +32,11 @@ public class KeycloakDBRepositoryJdbcImplTest {
                              + "token TEXT, "
                              + "user_id VARCHAR(36) NOT NULL,"
                              + "CONSTRAINT constraint_40 PRIMARY KEY (identity_provider, user_id))");
+    }
+
+    @AfterEach
+    public void tearDown() {
+        jdbcTemplate.execute("DROP TABLE federated_identity");
     }
 
     @Test
