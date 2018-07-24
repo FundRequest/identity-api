@@ -18,6 +18,6 @@ public class UserController {
     @ResponseBody
     @GetMapping(value = "/users", params = {"identityProvider", "federatedUsername"})
     public UserRepresentation findUser(@RequestParam String identityProvider, @RequestParam String federatedUsername) {
-        return userService.findByFederatedUsername(identityProvider, federatedUsername);
+        return userService.findByIdentityProviderAndFederatedUsername(identityProvider, federatedUsername);
     }
 }

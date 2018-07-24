@@ -39,7 +39,7 @@ class UserServiceImplTest {
         when(dbRepository.findUserIdByIdentityProviderAndFederatedUsername(identityProvider, username)).thenReturn(Optional.of(userId));
         when(realmResource.users().get(userId).toRepresentation()).thenReturn(userRepresentation);
 
-        final UserRepresentation result = userService.findByFederatedUsername(identityProvider, username);
+        final UserRepresentation result = userService.findByIdentityProviderAndFederatedUsername(identityProvider, username);
 
         assertThat(result).isSameAs(userRepresentation);
     }
@@ -51,6 +51,6 @@ class UserServiceImplTest {
 
         when(dbRepository.findUserIdByIdentityProviderAndFederatedUsername(identityProvider, username)).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> userService.findByFederatedUsername(identityProvider, username)).isInstanceOf(ResourceNotFoundException.class);
+        assertThatThrownBy(() -> userService.findByIdentityProviderAndFederatedUsername(identityProvider, username)).isInstanceOf(ResourceNotFoundException.class);
     }
 }
