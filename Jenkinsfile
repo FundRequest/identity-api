@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         GITHUB_CREDS = credentials('GITHUB_CRED')
-        CODECOV_TOKEN = credentials('PLATFORM_CODECOV_TOKEN')
+        CODECOV_TOKEN = credentials('IDENTITY-API_CODECOV_TOKEN')
     }
     options {
         disableConcurrentBuilds()
