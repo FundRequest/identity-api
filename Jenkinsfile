@@ -37,7 +37,7 @@ pipeline {
         }
         stage('Docker Build') {
           steps {
-            sh 'docker build -t fundrequestio/identityapi:${BRANCH_NAME} identity-api'
+            sh 'docker build -t fundrequestio/identityapi:${BRANCH_NAME} .'
           }
         }
         stage('Docker Push') {
