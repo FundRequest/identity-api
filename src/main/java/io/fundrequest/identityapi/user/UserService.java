@@ -6,5 +6,5 @@ import org.springframework.stereotype.Component;
 @Component
 public interface UserService {
 
-    UserRepresentation findByFederatedUsername(String identityProvider, final String federatedUsername);
+    UserRepresentation findByIdentityProviderAndFederatedUsername(final String identityProvider, final String federatedUsername);
 }

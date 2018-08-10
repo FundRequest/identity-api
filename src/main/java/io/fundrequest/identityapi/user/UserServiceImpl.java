@@ -1,5 +1,6 @@
 package io.fundrequest.identityapi.user;
 
+import io.fundrequest.common.infrastructure.exception.ResourceNotFoundException;
 import io.fundrequest.identityapi.infrastructure.KeycloakDBRepository;
 import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.representations.idm.UserRepresentation;
@@ -19,8 +20,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserRepresentation findByFederatedUsername(final String identityProvider, final String federatedUsername) {
-        final String userid = dbRepository.findUserIdByIdentityProviderAndFederatedUsername(identityProvider, federatedUsername);
-        return realmResource.users().get(userid).toRepresentation();
+    public UserRepresentation findByIdentityProviderAndFederatedUsername(final String identityProvider, final String federatedUsername) {
+        return dbRepository.findUserIdByIdentityProviderAndFederatedUsername(identityProvider, federatedUsername)
+                           .map(userId -> realmResource.users().get(userId).toRepresentation())
+                           .orElseThrow(ResourceNotFoundException::new);
     }
 }

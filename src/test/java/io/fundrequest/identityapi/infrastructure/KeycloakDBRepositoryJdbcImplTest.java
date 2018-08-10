@@ -1,6 +1,7 @@
 package io.fundrequest.identityapi.infrastructure;
 
 import io.fundrequest.identityapi.WebApplication;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,6 +34,11 @@ public class KeycloakDBRepositoryJdbcImplTest {
                              + "CONSTRAINT constraint_40 PRIMARY KEY (identity_provider, user_id))");
     }
 
+    @AfterEach
+    public void tearDown() {
+        jdbcTemplate.execute("DROP TABLE federated_identity");
+    }
+
     @Test
     public void findUserIdByRealmAndIdentityProviderAndFederatedUsername() throws DataAccessException {
         final String identityProvider = "ljhk";
@@ -43,7 +49,19 @@ public class KeycloakDBRepositoryJdbcImplTest {
         insertFederatedIdentity(identityProvider, federatedUsername, federatedUserId);
         insertFederatedIdentity(identityProvider, "afsdsv", "safdadfS");
 
-        assertThat(keycloakDBRepositoryImpl.findUserIdByIdentityProviderAndFederatedUsername(identityProvider, federatedUsername)).isEqualTo(federatedUserId);
+        assertThat(keycloakDBRepositoryImpl.findUserIdByIdentityProviderAndFederatedUsername(identityProvider, federatedUsername)).contains(federatedUserId);
+    }
+
+    @Test
+    public void findUserIdByRealmAndIdentityProviderAndFederatedUsername_notFound() throws DataAccessException {
+        final String identityProvider = "ljhk";
+        final String federatedUsername = "dfszbgs";
+        final String federatedUserId = "462f2db6-cfd2-47d8-a4de-g345aef3fd5";
+
+        insertFederatedIdentity("afdfsa", federatedUsername, "dafdszd");
+        insertFederatedIdentity(identityProvider, "afsdsv", "safdadfS");
+
+        assertThat(keycloakDBRepositoryImpl.findUserIdByIdentityProviderAndFederatedUsername(identityProvider, federatedUsername)).isEmpty();
     }
 
     private void insertFederatedIdentity(final String identityProvider, final String federatedUsername, final String federatedUserId) {

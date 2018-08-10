@@ -29,7 +29,7 @@ class UserControllerTest extends AbstractControllerTest<UserController> {
         final UserRepresentation userRepresentation = new UserRepresentation();
         userRepresentation.setId(UUID.randomUUID().toString());
 
-        when(userService.findByFederatedUsername(identityProvider, userName)).thenReturn(userRepresentation);
+        when(userService.findByIdentityProviderAndFederatedUsername(identityProvider, userName)).thenReturn(userRepresentation);
 
         final String jsonContent = new ObjectMapper().writeValueAsString(userRepresentation);
         mockMvc.perform(MockMvcRequestBuilders.get("/users")
